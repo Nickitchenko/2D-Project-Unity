@@ -27,7 +27,7 @@ public class CameraFollow2D : MonoBehaviour
         {
             x = this.playerTransform.position.x,
             y = this.playerTransform.position.y,
-            z = this.playerTransform.position.z - 10
+            z = this.playerTransform.position.z - 20
         };
     }
 
@@ -39,7 +39,7 @@ public class CameraFollow2D : MonoBehaviour
             {
                 x = this.playerTransform.position.x,
                 y = this.playerTransform.position.y,
-                z = this.playerTransform.position.z - 10
+                z = this.playerTransform.position.z - 20
             };
 
             Vector3 pos = Vector3.Lerp(this.transform.position, target, this.movingspeed = Time.deltaTime);

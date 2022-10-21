@@ -1400,12 +1400,12 @@ TextureImporter:
       name: tilemap_61
       rect:
         serializedVersion: 2
-        x: 52
+        x: 53
         y: 1
-        width: 15
-        height: 14
+        width: 10
+        height: 7
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1423,10 +1423,10 @@ TextureImporter:
         serializedVersion: 2
         x: 34
         y: 1
-        width: 16
-        height: 15
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 10
+        height: 7
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5109229}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1442,12 +1442,12 @@ TextureImporter:
       name: tilemap_63
       rect:
         serializedVersion: 2
-        x: 17
+        x: 20
         y: 1
-        width: 16
-        height: 14
+        width: 10
+        height: 7
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1463,12 +1463,12 @@ TextureImporter:
       name: tilemap_64
       rect:
         serializedVersion: 2
-        x: 0
+        x: 3
         y: 1
-        width: 15
-        height: 14
+        width: 10
+        height: 7
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
