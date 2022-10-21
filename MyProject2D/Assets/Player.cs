@@ -28,16 +28,7 @@ public class Player : MonoBehaviour
             position.x -= speed;
             GetComponent<SpriteRenderer>().flipX = true;
         }
-        transform.position = position;     
-        //animation
-        if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
-        {
-            GetComponent<Animator>().Play("run");
-        }
-        else
-        {
-            GetComponent<Animator>().Play("idle");
-        }
+        transform.position = position;        
     }
 
     private void Update()
@@ -62,6 +53,16 @@ public class Player : MonoBehaviour
                 doubleisGrounded = false;
             }
         }
+        //animation
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        {
+            if(isGrounded == true) GetComponent<Animator>().Play("run");
+        }
+        else
+        {
+            if(isGrounded==true) GetComponent<Animator>().Play("idle");
+        }
+        GetComponent<Animator>().SetBool("isGrounded", isGrounded);
     }
 
     private void OnCollisionStay2D(Collision2D collision)
