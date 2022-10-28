@@ -14,6 +14,13 @@ public class Player : MonoBehaviour
     //interface
     public Text textcoins;
 
+    //hp
+    public float hp;
+    public float hpmax;
+
+    public Image healthImage;
+
+    public bool isCanTakeDamage = true;
 
     //jump
     private bool isGrounded;
@@ -76,6 +83,19 @@ public class Player : MonoBehaviour
 
         //interface
         textcoins.text = (coins_count.ToString() + " Coins");
+
+        healthImage.fillAmount = hp / hpmax;
+        
+        if(hp<=0)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+    }
+
+    IEnumerator damageTimer()
+    {
+        yield return new WaitForSeconds(0.2f);
+        isCanTakeDamage = true;
     }
 
     private void OnCollisionStay2D(Collision2D collision)
