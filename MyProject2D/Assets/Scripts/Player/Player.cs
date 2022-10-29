@@ -28,6 +28,8 @@ public class Player : MonoBehaviour
 
     private Vector2 position;
 
+    public GameObject bulletPtrefab;
+
     private void FixedUpdate()
     {
         //moving
@@ -90,6 +92,12 @@ public class Player : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
+
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            Instantiate(bulletPtrefab, transform.position, Quaternion.identity, null).GetComponent<Bullet>().isRight = !GetComponent<SpriteRenderer>().flipX;
+        }
+
     }
 
     IEnumerator damageTimer()

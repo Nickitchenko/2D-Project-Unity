@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7115017175643482455}
   - component: {fileID: 7115017175643482440}
   - component: {fileID: 7115017175643482441}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -127,6 +127,9 @@ MonoBehaviour:
   textcoins: {fileID: 0}
   hp: 100
   hpmax: 100
+  healthImage: {fileID: 0}
+  isCanTakeDamage: 1
+  bulletPtrefab: {fileID: 4456568113737359627, guid: 400d93ad63a16fc47a1eb48965ee093e, type: 3}
 --- !u!60 &7115017175643482440
 PolygonCollider2D:
   m_ObjectHideFlags: 0
