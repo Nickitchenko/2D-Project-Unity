@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyPatroling : MonoBehaviour
 {
@@ -10,16 +11,42 @@ public class EnemyPatroling : MonoBehaviour
 
     public float speed;
 
+    public float hp;
+    public float hpmax;
+    public Image healthImage;
+
     public int currentpoint;
 
+    public GameObject player;
+
     public SpriteRenderer spriteRenderer;
+
+    private void Start()
+    {
+        hp = hpmax;
+    }
+
+    private void Update()
+    {
+        healthImage.fillAmount = hp / hpmax;
+        if(transform.position.y<-2)
+        {
+            player.GetComponent<Player>().kills_enemy++;
+            Destroy(gameObject);
+        }
+        else if (hp <= 0)
+        {
+            player.GetComponent<Player>().kills_enemy++;
+            Destroy(gameObject);
+        }
+    }
 
     private void FixedUpdate()
     {
         if(currentpoint==0)
         {
-            transform.position = Vector3.MoveTowards(transform.position, leftpoint, speed);
-            if(transform.position==leftpoint)
+            transform.localPosition = Vector3.MoveTowards(transform.localPosition, leftpoint, speed);
+            if(transform.localPosition==leftpoint)
             {
                 currentpoint = 1;
                 spriteRenderer.flipX = false;
@@ -27,8 +54,8 @@ public class EnemyPatroling : MonoBehaviour
         }
         else if(currentpoint==1)
         {
-            transform.position = Vector3.MoveTowards(transform.position, rightpoint, speed);
-            if (transform.position == rightpoint)
+            transform.localPosition = Vector3.MoveTowards(transform.localPosition, rightpoint, speed);
+            if (transform.localPosition == rightpoint)
             {
                 currentpoint = 2;
                 spriteRenderer.flipX = true;
@@ -36,8 +63,8 @@ public class EnemyPatroling : MonoBehaviour
         }
         else if(currentpoint==2)
         {
-            transform.position = Vector3.MoveTowards(transform.position, centrepoint, speed);
-            if (transform.position == centrepoint)
+            transform.localPosition = Vector3.MoveTowards(transform.localPosition, centrepoint, speed);
+            if (transform.localPosition == centrepoint)
             {
                 currentpoint = 0;
             }

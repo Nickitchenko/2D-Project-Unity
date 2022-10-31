@@ -13,10 +13,18 @@ public class Player : MonoBehaviour
 
     //interface
     public Text textcoins;
+    public Text textdeath;
+    public int Allcount_coins;
+    public int AllCountEnemy;
+
+    //portal
+    public GameObject portal;
 
     //hp
     public float hp;
     public float hpmax;
+    
+    public int kills_enemy=0;
 
     public Image healthImage;
 
@@ -27,8 +35,19 @@ public class Player : MonoBehaviour
     private bool doubleisGrounded;
 
     private Vector2 position;
-
+    //bullet
     public GameObject bulletPtrefab;
+
+    public Transform Leftpoint;
+    public Transform Rightpoint;
+
+    public bool isgun=false;
+
+    private void Start()
+    {
+        Allcount_coins = GameObject.FindGameObjectsWithTag("Coin").Length;
+        AllCountEnemy = GameObject.FindGameObjectsWithTag("Enemy").Length;
+    }
 
     private void FixedUpdate()
     {
@@ -55,6 +74,7 @@ public class Player : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
+
         //move
         if(Input.GetKeyDown(KeyCode.W)/* && isGrounded==true*/)
         {
@@ -66,36 +86,69 @@ public class Player : MonoBehaviour
             else if(isGrounded==false && doubleisGrounded==true)
             {
                 GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                GetComponent<Animator>().Play("idle");
-                GetComponent<Rigidbody2D>().AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+                if (!isgun) GetComponent<Animator>().Play("idle"); //isgun or not = idle
+                else GetComponent<Animator>().Play("idle_gun");
+                GetComponent<Rigidbody2D>().AddForce(transform.up * jumpForce, ForceMode2D.Impulse); //doublejump
                 GetComponent<Animator>().SetBool("isGrounded", isGrounded);
                 doubleisGrounded = false;
             }
         }
         //animation
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) //moving animation
         {
-            if(isGrounded == true) GetComponent<Animator>().Play("run");
+            if (isGrounded == true)
+            {
+                if (!isgun) GetComponent<Animator>().Play("run");
+                else GetComponent<Animator>().Play("run_gun");
+            }
         }
         else
         {
-            if(isGrounded==true) GetComponent<Animator>().Play("idle");
+            if (isGrounded == true)
+            { if (!isgun) GetComponent<Animator>().Play("idle");
+                else GetComponent<Animator>().Play("idle_gun");
+            }
         }
-        GetComponent<Animator>().SetBool("isGrounded", isGrounded);
+
+        GetComponent<Animator>().SetBool("isGrounded", isGrounded); //from animator to script
+        GetComponent<Animator>().SetBool("isGun", isgun);
 
         //interface
-        textcoins.text = (coins_count.ToString() + " Coins");
+        textcoins.text = coins_count.ToString()+"/" + Allcount_coins;
+        textdeath.text = kills_enemy.ToString() + "/" + AllCountEnemy;
+
+        //recolor portal
+        if(coins_count==Allcount_coins && kills_enemy==AllCountEnemy)
+        {
+            Color col = new Color(0.86f, 0.45f, 1);
+            portal.GetComponent<SpriteRenderer>().color = col;
+        }
 
         healthImage.fillAmount = hp / hpmax;
         
-        if(hp<=0)
+        if(hp<=0)//restart level if hp zero
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.Space))//shot for gun
         {
-            Instantiate(bulletPtrefab, transform.position, Quaternion.identity, null).GetComponent<Bullet>().isRight = !GetComponent<SpriteRenderer>().flipX;
+            if (isgun)
+            {
+                if (GetComponent<SpriteRenderer>().flipX == false)
+                {
+                    Instantiate(bulletPtrefab, Rightpoint.position, Quaternion.identity, null).GetComponent<Bullet>().isRight = !GetComponent<SpriteRenderer>().flipX;
+                }
+                else
+                {
+                    Instantiate(bulletPtrefab, Leftpoint.position, Quaternion.identity, null).GetComponent<Bullet>().isRight = !GetComponent<SpriteRenderer>().flipX;
+                }
+            }
+        }
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene(0);
         }
 
     }

@@ -6,6 +6,7 @@ public class Bullet : MonoBehaviour
 {
     public bool isRight;
     public float speed;
+    public float damage;
 
     private Rigidbody2D rb2d;
     private SpriteRenderer spriteRenderer;
@@ -32,9 +33,18 @@ public class Bullet : MonoBehaviour
     {
         if (!collision.collider.isTrigger)
         {
-            if (collision.gameObject.tag == "Enemy")
+            if (collision.gameObject.GetComponent<EnemyPatroling>())
             {
-                Destroy(collision.gameObject);
+                collision.gameObject.GetComponent<EnemyPatroling>().hp -= damage;
+                Destroy(gameObject);
+            }
+            else if (collision.gameObject.GetComponent<EnemyFlying>())
+            {
+                collision.gameObject.GetComponent<EnemyFlying>().hp -= damage;
+                Destroy(gameObject);
+            }
+            else if (collision.gameObject.tag == "Ground")
+            {
                 Destroy(gameObject);
             }
         }
